@@ -28,7 +28,11 @@ exit
 fi
 
 echo "#3. chromosome gene extraction" && date
-python /home/tzhang/MDS_data/plink_set.py ${outdir}/${vcf}.${chr}.vcf ${outdir}/${vcf}.${chr}.vcf.geneset /home/tzhang/database/database_port/gnomad_ab0.05_${chr} 
+python /home/tzhang/MDS_data/plink_set.py \
+${outdir}/${vcf}.${chr}.vcf \
+${outdir}/${vcf}.${chr}.vcf.geneset \
+/home/tzhang/database/database_port/gnomad_ab0.05_${chr} 
+
 cat ${outdir}/${vcf}.${chr}.vcf.geneset[._]* > ${outdir}/${vcf}.${chr}.vcf.geneset
 awk 'FNR>1{split($8,b,";");split(b[1],a,"="); if ($1!~"#") print a[2]"\t"$3}' ${outdir}/${vcf}.${chr}.vcf >  ${outdir}/${vcf}.${chr}.SKAT
 
