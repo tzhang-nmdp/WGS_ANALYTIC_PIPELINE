@@ -1,7 +1,7 @@
 # WGS_ANALYTIC_PIPELINE
 
 It's WGS analytic pipeline with two parts:
-```json
+
 ```diff
 PART I. A series of VCF data transformations: + this text is highlighted in green
 1. snpEff VCF annotation;
