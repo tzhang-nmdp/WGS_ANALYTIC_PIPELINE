@@ -15,9 +15,9 @@ if [ -n "${con}" ] && [ "${con}" == "snpeff" ]; then
                 echo ${sample}      
                 # 2.2 run snpEff annotation with job number control ( 10 jobs in parallel)
                 if (( i%10==0 )); then
-                      sh ${snpeff_script} ${sample} ${outdir}
+                      sh ${snpeff_script} ${outdir} ${sample}
                       else
-                      sh ${snpeff_script} ${sample} ${outdir} &                      
+                      sh ${snpeff_script} ${outdir} ${sample} &                      
                 fi
         done
 fi
