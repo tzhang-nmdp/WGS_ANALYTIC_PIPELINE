@@ -2,8 +2,8 @@
 
 It's WGS analytic pipeline with two parts:
 
-```diff
-PART I. A series of VCF data transformations: + this text is highlighted in green
+```json
+PART I. A series of VCF data transformations:
 1. snpEff VCF annotation;
 2. bcftools VCF merge;
 3. VCF data transformation on genotype/annotation fields.
