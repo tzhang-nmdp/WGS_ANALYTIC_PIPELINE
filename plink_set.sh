@@ -3,17 +3,17 @@
 outdir=$1
 vcf=$2
 chr=$3
-con=$4
+temp=$4
 echo ${chr}
 
 echo "#1. chromosome variant extraction" && date
 awk -v a="$chr" '($1~"#")||($1==a){print $0}' ${outdir}/${vcf}  > ${outdir}/${vcf}.${chr}
 
 echo "#2 chromosome variant transformation" && date
-if [ ${con} == "somatic" ] ; then 
+if [ ${temp} == "somatic" ] ; then 
 echo "somatic"
 python /home/tzhang/MDS_data/vcf_id.py ${outdir}/${vcf}.${chr} somatic > ${outdir}/${vcf}.${chr}.vcf
-elif [ ${con} == "germline" ] ; then 
+elif [ ${temp} == "germline" ] ; then 
 echo "germline"
 python /home/tzhang/MDS_data/vcf_id.py ${outdir}/${vcf}.${chr} germ > ${outdir}/${vcf}.${chr}.vcf
 fi
