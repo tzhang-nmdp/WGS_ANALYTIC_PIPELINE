@@ -1,5 +1,6 @@
 # WGS_ANALYTIC_PIPELINE
 
+```html
 # PART I. A series of VCF data transformations:
 1. snpEff VCF annotation;
 2. bcftools VCF merge;
