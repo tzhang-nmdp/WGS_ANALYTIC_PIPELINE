@@ -1,8 +1,8 @@
 #!/bin/sh
 # 1. parameter setting #
 HOME=${HOME}
-sample=$1
-outdir=$2
+outdir=$1
+sample=$2
 mkdir ${outdir}/snpEff_vcf
 
 # 2. snpEff basic variant annotation
