@@ -6,7 +6,7 @@
 
 
 
-`1. snpEff VCF annotation;`
+-`1. snpEff VCF annotation;`
 
 `2. bcftools VCF merge;`
 
