@@ -1,13 +1,13 @@
 # WGS_ANALYTIC_PIPELINE 
 -
 
-# PART I. A series of VCF data transformations:
+### PART I. A series of VCF data transformations:
 -
 1. snpEff VCF annotation;
 2. bcftools VCF merge;
 3. VCF data transformation on genotype/annotation fields.
 
-# PART II. A set of variant level or gene level association tests:
+### PART II. A set of variant level or gene level association tests:
 -
 1. VCF data transformation;
 2. PLINK logstic/Chisq test;
