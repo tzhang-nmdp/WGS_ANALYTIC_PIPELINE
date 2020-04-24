@@ -2,10 +2,10 @@
 
 It's WGS analytic pipeline with two parts:
 
-```json
 <div class="text-blue">
 PART I. A series of VCF data transformations: <a href="#" class="text-inherit">including the link</a>
 </div>
+PART I. A series of VCF data transformations:
 1. snpEff VCF annotation;
 2. bcftools VCF merge;
 3. VCF data transformation on genotype/annotation fields.
