@@ -7,8 +7,8 @@
 ## Default parameter option
 #------------------------------------------------------------------------------------------------------------------------------
 
-PLINK=/home/tzhang/software/plink_1.9/plink
-HOME=/home/tzhang/MDS_data/
+HOME=/home/tzhang/
+PLINK=${HOME}/software/plink_1.9/plink
 
 #------------------------------------------------------------------------------------------------------------------------------
 ## Option setup for paramters 
