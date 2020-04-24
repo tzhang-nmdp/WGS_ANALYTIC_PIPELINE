@@ -80,7 +80,7 @@ if [ -n "${con}" ] && ([ "${con}" == "prep" ] || [ "${con}" == "all" ]); then
         do
         chr="chr"${x}
         echo ${sample_vcf} " go to " ${chr}
-        sh ${HOME}/plink_set.sh ${sample_vcf} ${oPath} ${chr} ${temp}
+        sh ${HOME}/plink_set.sh ${oPath} ${sample_vcf} ${chr} ${temp}
     done
     echo -e "${sample} plink-pre endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
 fi
