@@ -2,7 +2,8 @@
 # 1. basic parameters
 outdir=$1
 sample_list=$2
-con=$3
+snpeff_script=$3
+con=$4
 
 # 2. run condition in batch
 if [ -n "${con}" ] && [ "${con}" == "snpeff" ]; then
@@ -14,9 +15,9 @@ if [ -n "${con}" ] && [ "${con}" == "snpeff" ]; then
                 echo ${sample}      
                 # 2.2 run snpEff annotation with job number control ( 10 jobs in parallel)
                 if (( i%10==0 )); then
-                      sh 2.VCF_summary.sh ${sample} ${outdir}
+                      sh ${snpeff_script} ${sample} ${outdir}
                       else
-                      sh 2.VCF_summary.sh ${sample} ${outdir} &                      
+                      sh ${snpeff_script} ${sample} ${outdir} &                      
                 fi
         done
 fi
