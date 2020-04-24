@@ -10,9 +10,9 @@
 
 `2. bcftools VCF merge;`
 
-`3. VCF data transformation on genotype/annotation fields.`
+`3. VCF data transformation on genotype/annotation fields;`
 
-
+`4.  VCF data transformation on variant gene set.`
 
 #### PART II. A set of variant level or gene level association tests:
 
