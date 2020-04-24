@@ -1,6 +1,12 @@
 # WGS_ANALYTIC_PIPELINE
 
-It's WGS analytic pipeline with a set of variant level or gene level association tests:
+It's WGS analytic pipeline with two parts:
+PART I. A series of VCF data transformations:
+1. snpEff VCF annotation;
+2. bcftools VCF merge;
+3. VCF data transformation on genotype/annotation fields.
+
+PART II. A set of variant level or gene level association tests:
 1. VCF data transformation;
 2. PLINK logstic/Chisq test;
 3. R conditional logistic regression test;
