@@ -37,7 +37,7 @@ do
         ;;
     esac
 done
-if [ ! ${sName} ]; then
+if [ ! ${sample_vcf} ]; then
     echo "-s invalid"
     exit 1
 fi
