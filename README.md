@@ -1,6 +1,7 @@
 # WGS_ANALYTIC_PIPELINE
 
 It's WGS analytic pipeline with two parts:
+
 PART I. A series of VCF data transformations:
 1. snpEff VCF annotation;
 2. bcftools VCF merge;
