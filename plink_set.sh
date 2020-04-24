@@ -17,9 +17,6 @@ python /home/tzhang/MDS_data/vcf_id.py ${outdir}/${vcf}.${chr} somatic > ${outdi
 elif [ ${con} == "germline" ] ; then 
 echo "germline"
 python /home/tzhang/MDS_data/vcf_id.py ${outdir}/${vcf}.${chr} germ > ${outdir}/${vcf}.${chr}.vcf
-elif [ ${con} == "germline_somatic" ] ; then 
-echo "germline_somatic"
-python /home/tzhang/MDS_data/vcf_id.py ${outdir}/${vcf}.${chr} germ_sim > ${outdir}/${vcf}.${chr}.vcf
 fi
 
 echo "#3. chromosome gene extraction" && date
