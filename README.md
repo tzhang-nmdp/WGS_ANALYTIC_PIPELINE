@@ -2,8 +2,7 @@
 
 It's WGS analytic pipeline with two parts:
 ```json
-   // &#x1F34E;
-PART I. A series of VCF data transformations:
+PART I. A series of VCF data transformations: // &#x1F34E;
 1. snpEff VCF annotation;
 2. bcftools VCF merge;
 3. VCF data transformation on genotype/annotation fields.
