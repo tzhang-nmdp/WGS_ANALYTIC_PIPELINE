@@ -1,7 +1,7 @@
 # WGS_ANALYTIC_PIPELINE 
----
-
-
+ 
+ 
+  
 #### PART I. A series of VCF data transformations:
 
 ---
