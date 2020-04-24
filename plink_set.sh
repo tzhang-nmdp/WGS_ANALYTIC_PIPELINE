@@ -18,6 +18,15 @@ echo "germline"
 python /home/tzhang/MDS_data/vcf_id.py ${outdir}/${vcf}.${chr} germ > ${outdir}/${vcf}.${chr}.vcf
 fi
 
+# check vcf transformation
+if [ $? -eq 0 ]; then
+echo "vcf file ready"
+rm ${outdir}/${vcf}.${chr}
+else
+echo ${vcf} >> ${outdir}/vcf.error
+exit
+fi
+
 echo "#3. chromosome gene extraction" && date
 python /home/tzhang/MDS_data/plink_set.py ${outdir}/${vcf}.${chr}.vcf ${outdir}/${vcf}.${chr}.vcf.geneset /home/tzhang/database/database_port/gnomad_ab0.05_${chr} 
 cat ${outdir}/${vcf}.${chr}.vcf.geneset[._]* > ${outdir}/${vcf}.${chr}.vcf.geneset
