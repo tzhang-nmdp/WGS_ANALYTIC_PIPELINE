@@ -120,7 +120,7 @@ if [ -n "${con}" ] && ([ "${con}" == "clr" ]|| [ "${con}" == "all" ]); then
         echo ${sample_vcf} " go to " ${chr}
         awk '($1~"#CHROM")||($1~"CHROM"){print $0}' ${oPath}/${sample_vcf}.${chr}.vcf  | sed 's%#%%g' > ${oPath}/${sample_vcf}.header.tmp
         #sed 's%#CHROM%CHROM%g' ${oPath}/${sample_vcf}.${chr}.vcf > ${oPath}/${sample_vcf}.${chr}.vcf.gene.tmp
-        Rscript ${HOME}/clogit.R -i ${oPath}/${sample_vcf}.${chr}.vcf -s ${HOME}/IDR_pair_outcome.txt -o ${oPath}/clr/${sample_vcf}.${chr}.vcf.R.clr -d ${oPath}/${sample_vcf}.header.tmp
+        Rscript ${HOME}/R_CLOGIT.R -i ${oPath}/${sample_vcf}.${chr}.vcf -s ${HOME}/IDR_pair_outcome.txt -o ${oPath}/clr/${sample_vcf}.${chr}.vcf.R.clr -d ${oPath}/${sample_vcf}.header.tmp
     done
     echo -e "${sample} clr endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log1
 fi
@@ -165,7 +165,7 @@ if [ -n "${con}" ] && ([ "${con}" == "skat" ]|| [ "${con}" == "all" ]); then
         echo ${sample} " go to " ${chr}
         ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno  ${HOME}/${sample_vcf}.fam  --mpheno 4 --allow-no-sex --make-bed --out ${oPath}/${sample_vcf}.${chr}
         awk 'FNR>1{split($8,b,";");split(b[1],a,"="); if ($1!~"#") print a[2]"\t"$3}' ${oPath}/${sample_vcf}.${chr}.vcf >  ${oPath}/${sample_vcf}.${chr}.SKAT
-        Rscript ${HOME}/skata_o.R -i ${oPath}/${sample_vcf}.${chr} -c ${HOME}/SKAT_188R.cov -o ${oPath}/skat/${sample_vcf}.${chr}.vcf.R.skata_o 
+        Rscript ${HOME}/R_SKAT.R -i ${oPath}/${sample_vcf}.${chr} -c ${HOME}/SKAT_188R.cov -o ${oPath}/skat/${sample_vcf}.${chr}.vcf.R.skata_o 
     done
     
     echo -e "${sample} skat-o endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
