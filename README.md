@@ -18,16 +18,15 @@
 
 
 
-`1. VCF data transformation;`
 
-`2. PLINK logstic/Chisq test;`
+`1. PLINK logstic/Chisq test;`
 
-`3. R conditional logistic regression test;`
+`2. R conditional logistic regression test;`
 
-`4. PLINK gene burden test;`
+`3. PLINK gene burden test;`
 
-`5. R SKAT-O test;`
+`4. R SKAT-O test;`
 
-`6. PLINK QTL test;`
+`5. PLINK QTL test;`
 
-`7. PLINK QTL gene burden test.`
+`6. PLINK QTL gene burden test.`
