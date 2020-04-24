@@ -190,10 +190,9 @@ if [ -n "${con}" ] && ([ "${con}" == "qtl" ]|| [ "${con}" == "#all" ]); then
         ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --keep ${HOME}/${sample_vcf}.protein --make-bed --out ${oPath}/${sample_vcf}.${chr}.vcf.gene.soma.R
         
         for x in $(seq 1 $N2)
-        do
-        
-        ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.soma.R --pheno ${HOME}/${sample_vcf}.protein --mpheno ${x}  --covar ${HOME}/${sample_vcf}.cov --covar-number  2 --threads 128  --allow-no-sex --linear  --assoc perm --pfilter 0.05 --out ${oPath}/qtl_new/${sample_vcf}.${chr}.R.${x} 
-        
+        do       
+            ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.soma.R --pheno ${HOME}/${sample_vcf}.protein --mpheno ${x}  --covar ${HOME}/${sample_vcf}.cov --covar-number  2 --threads 128  --allow-no-sex --linear  --assoc perm --pfilter 0.05 --out ${oPath}/qtl_new/${sample_vcf}.${chr}.R.${x} 
+        done
     done
     
     rm ${oPath}/qtl_sgl/*.log
@@ -227,7 +226,8 @@ if [ -n "${con}" ] && ([ "${con}" == "qtl_gb" ]|| [ "${con}" == "all" ]); then
         do
             for i in $(seq 0 $No3)
             do
-            ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.qtl.R --pheno ${HOME}/${sample_vcf}.protein --mpheno ${x} --threads 128     --covar ${HOME}/${sample_vcf}.cov --covar-number  2 --allow-no-sex --linear --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i}  --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/qtl_gb/${sample_vcf}.${chr}.vcf.set.R.${x}_${i} 
+                ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.qtl.R --pheno ${HOME}/${sample_vcf}.protein --mpheno ${x} --threads 128     --covar ${HOME}/${sample_vcf}.cov --covar-number  2 --allow-no-sex --linear --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i}  --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/qtl_gb/${sample_vcf}.${chr}.vcf.set.R.${x}_${i} 
+            done
         done
     done
     
