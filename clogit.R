@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 #set up workdir
-setwd("/home/tzhang/MDS_data/test")
+setwd("/home/tzhang")
 
 library(survival)
 library(optparse)
