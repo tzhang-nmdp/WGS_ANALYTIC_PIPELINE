@@ -1,7 +1,7 @@
 #!/bin/sh
 # start with snpEff annotated vcf
-vcf=$1
-outdir=$2
+outdir=$1
+vcf=$2
 chr=$3
 con=$4
 echo ${chr}
