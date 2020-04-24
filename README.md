@@ -1,10 +1,9 @@
 # WGS_ANALYTIC_PIPELINE
 
 It's WGS analytic pipeline with two parts:
-
-PART I. A series of VCF data transformations:
 ```json
    // &#x1F34E;
+PART I. A series of VCF data transformations:
 1. snpEff VCF annotation;
 2. bcftools VCF merge;
 3. VCF data transformation on genotype/annotation fields.
