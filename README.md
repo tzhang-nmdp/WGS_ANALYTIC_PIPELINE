@@ -4,7 +4,7 @@
   
 #### PART I. A series of VCF data transformations:
 
----
+
 
 `1. snpEff VCF annotation;`
 
@@ -16,7 +16,7 @@
 
 #### PART II. A set of variant level or gene level association tests:
 
----
+
 
 `1. VCF data transformation;`
 
