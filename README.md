@@ -1,6 +1,6 @@
 # WGS_ANALYTIC_PIPELINE 
 
-|Pre- requisites|---------------|
+|Pre- requisites|Package information|
 |---------------|---------------|
 |[miniconda software]: | https://docs.conda.io/en/latest/miniconda.html#linux-installers |
 | [snpEff software]: | http://snpeff.sourceforge.net/SnpEff_manual.html  |
