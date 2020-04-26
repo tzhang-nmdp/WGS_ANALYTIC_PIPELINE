@@ -2,7 +2,7 @@
 
 |Pre- requisites| 
 | ------------- | 
-|[miniconda software]: https://docs.conda.io/en/latest/miniconda.html#linux-installers  |
+[miniconda software]: https://docs.conda.io/en/latest/miniconda.html#linux-installers 
 | [snpEff software]: http://snpeff.sourceforge.net/SnpEff_manual.html  |
 | [bcftools software]: https://samtools.github.io/bcftools/howtos/index.html  | 
 | [PLINK software]: https://www.cog-genomics.org/plink/1.9/output |
