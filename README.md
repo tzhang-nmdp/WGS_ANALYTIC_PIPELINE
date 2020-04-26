@@ -30,3 +30,11 @@
 * `5. PLINK QTL test;`
 
 * `6. PLINK QTL gene burden test.`
+
+echo "# test" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/taozhang2019/test.git
+git push -u origin master
+                
