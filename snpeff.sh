@@ -1,6 +1,6 @@
 #!/bin/sh
 # 1. parameter setting #
-HOME=${HOME}
+HOME=/home/tzhang
 outdir=$1
 sample=$2
 mkdir ${outdir}/snpEff_vcf
