@@ -9,7 +9,7 @@ mkdir ${outdir}/snpEff_vcf
 echo -e "${vcf} snpEff startTime::::::::\c"; date
 
 java -d64 -Xmx3g -jar ${HOME}/software/snpEff/snpEff.jar \
--v GRCh38.86 ${outdir}/snpEff_vcf/${sample_vcf} \
+-v GRCh38.86 ${outdir}/${sample_vcf} \
 -canon -stats ${outdir}/snpEff_vcf/${sample_vcf}.html \
 > ${outdir}/snpEff_vcf/${sample_vcf}.snpEff.vcf
 
