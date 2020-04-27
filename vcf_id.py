@@ -54,7 +54,7 @@ def vcf_id_somatic(line):
         return line
 
 # define function for correction of germline genotype and info field     
-    def vcf_id_germ(line):
+def vcf_id_germ(line):
     item=line.strip().split('\t')
     if item[0].startswith('##'):        
         return "NONE"    
