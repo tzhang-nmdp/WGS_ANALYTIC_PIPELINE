@@ -1,6 +1,7 @@
 #!/bin/sh
 outdir=$1
 sample=$2
+HOME=/home/tzhang
 
 # sort  and compress the vcf by coordinates
 (grep ^"#" ${outdir}/${sample}.snpEff.vcf ; grep -v ^"#" ${outdir}/${sample}.snpEff.vcf \
