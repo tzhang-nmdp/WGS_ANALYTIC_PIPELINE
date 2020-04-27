@@ -1,4 +1,5 @@
 # WGS_ANALYTIC_PIPELINE 
+![WGS_WORKFLOW](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/WGS_WORKFLOW.png)
 
 |Pre- requisites|Package information|
 |---------------|---------------|
