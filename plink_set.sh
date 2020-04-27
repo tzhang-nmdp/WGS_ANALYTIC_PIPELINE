@@ -8,7 +8,7 @@ echo ${chr}
 HOME=/home/tzhang
 
 echo "#1. chromosome variant extraction" && date
-awk -v a="$chr" '($1~"#")||($1==a){print $0}' ${outdir}/snpEff_vcf/${vcf}  > ${outdir}/${vcf}.${chr}
+awk -v a="$chr" '($1~"#")||($1==a){print $0}' ${outdir}/${vcf}  > ${outdir}/${vcf}.${chr}
 
 echo "#2 chromosome variant transformation" && date
 if [ ${temp} == "somatic" ] ; then 
