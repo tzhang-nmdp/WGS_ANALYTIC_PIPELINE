@@ -1,7 +1,6 @@
 #!/usr/bin/env Rscript
 
 #set up workdir
-setwd("/home/tzhang")
 
 library(survival)
 library(optparse)
@@ -14,6 +13,9 @@ input<-as.character(opt$input_file)
 head_f<-as.character(opt$head_file)
 sample_info<-as.character(opt$sample_file)
 output<-as.character(opt$output_file)
+
+cwd=dirname('output')
+setwd(cwd)
 
 print("starting...")
 Sys.time()
@@ -54,7 +56,7 @@ print("# integrate genotype phenotype information")
     var_tmp<-as.data.frame(var_tmp0)
     var_tmp[,2]<-row.names(var_tmp)
     colnames(var_tmp)<-c('V1','V2') 
-    id_var<-as.data.frame(merge(id,var_tmp,by.x='sample_id',by.y='V2'))
+    id_var<-as.data.frame(merge(id,var_tmp,by.x='IID',by.y='V2'))
     colnames(id_var)[16]<-'geno'  
     id_var[,16]<-sapply(id_var[,16],as.character)         
     id_len<-dim(id_var)[1]  
@@ -77,7 +79,7 @@ print("# clogit test running")
         {pvalue_list[i]<-1}           
     else
         {
-    var_CLR<-clogit(outcome~geno+strata(matched_pair_id),method="approximate", data=id_var)
+    var_CLR<-clogit(COV1~geno+strata(COV2),method="approximate", data=id_var)
     warnings()
     st_tmp<-summary(var_CLR)
     pvalue_list[i]<-st_tmp$coefficients[5]
