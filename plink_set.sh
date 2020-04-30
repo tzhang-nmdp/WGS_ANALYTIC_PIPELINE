@@ -5,7 +5,7 @@ vcf=$2
 chr=$3
 temp=$4
 echo ${chr}
-HOME=/home/tzhang
+HOME=$(awk '($1~"^HOME"){print $0}' cfg | cut -d "=" -f 2)
 
 echo "#1. chromosome variant extraction" && date
 awk -v a="$chr" '($1~"#")||($1==a){print $0}' ${outdir}/${vcf}  > ${outdir}/${vcf}.${chr}
@@ -34,8 +34,6 @@ ${outdir}/${vcf}.${chr}.vcf \
 ${outdir}/${vcf}.${chr}.vcf.geneset \
 ${HOME}/database/database_port/gnomad_ab0.05_${chr} 
 
+echo "#4. for SKAT geneset"
 cat ${outdir}/${vcf}.${chr}.vcf.geneset[._]* > ${outdir}/${vcf}.${chr}.vcf.geneset
 awk 'FNR>1{split($8,b,";");split(b[1],a,"="); if ($1!~"#") print a[2]"\t"$3}' ${outdir}/${vcf}.${chr}.vcf >  ${outdir}/${vcf}.${chr}.SKAT
-
-echo "#4. for SKAT geneset"
-awk 'FNR>1{split($8,b,";");split(b[1],a,"="); if ($1!~"#") print a[2]"\t"$3}' ${outdir}/${vcf}.${chr}.vcf.gene >  ${outdir}/${vcf}.${chr}.SKAT
