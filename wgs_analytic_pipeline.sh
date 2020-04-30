@@ -1,13 +1,13 @@
 #!/bin/sh
 ############################################################################################################################################################
-# example commandline sh ../../12.plink_gene_set.assoc.sh -s NMDP.somatic.vcf.R -o /home/tzhang/MDS_data/test -c set -t somatic -n 1 22
+# example commandline sh ../../wgs_analytic_pipeline.sh -s sample.list.snpeff.combine.vcf -o example -c set -t somatic -n 1 1
 ############################################################################################################################################################
 
 #------------------------------------------------------------------------------------------------------------------------------
 ## Default parameter option
 #------------------------------------------------------------------------------------------------------------------------------
 
-HOME=/home/tzhang
+HOME=$(awk '($1~"^HOME"){print $0}' cfg | cut -d "=" -f 2)
 PLINK=${HOME}/software/plink_1.9/plink
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -76,11 +76,12 @@ echo ${shellPath}
 if [ -n "${con}" ] && ([ "${con}" == "prep" ] || [ "${con}" == "all" ]); then
     echo "############################################## vcf data transformation ##################################"
     echo -e "${sample} plink-pre startTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
-    for x in $(seq $No1 $No2) X
+    for x in $(seq $No1 $No2) #X Y
         do
         chr="chr"${x}
         echo ${sample_vcf} " go to " ${chr}
         sh ${HOME}/plink_set.sh ${oPath} ${sample_vcf} ${chr} ${temp}
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --recode --make-bed --out ${oPath}/${sample_vcf}.${chr}
     done
     echo -e "${sample} plink-pre endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
 fi
@@ -94,12 +95,12 @@ if [ -n "${con}" ] && ([ "${con}" == "sgl" ]|| [ "${con}" == "all" ]); then
     echo "############################################## variant PLINK association test ##################################"
     echo -e "${sample} plink-single startTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
     mkdir  ${oPath}/sgl
-    for x in $(seq $No1 $No2) X
+    for x in $(seq $No1 $No2) #X Y
     do
         chr="chr"$x
         echo ${sample_vcf} " go to " ${chr}
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${HOME}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${HOME}/${sample_vcf}.cov --covar-number 2-13 --logistic perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig.R
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${HOME}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${HOME}/${sample_vcf}.cov --covar-number 2-13 --assoc perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig.R
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${oPath}/${sample_vcf}.cov --covar-number 2-13 --logistic perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${oPath}/${sample_vcf}.cov --covar-number 2-13 --assoc perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig
     done
     rm ${oPath}/sgl/*.log
     rm ${oPath}/sgl/*sex
@@ -114,13 +115,13 @@ if [ -n "${con}" ] && ([ "${con}" == "clr" ]|| [ "${con}" == "all" ]); then
     echo "############################################## variant conditional logistic regression association test ##################################"
     echo -e "${sample} clr startTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
     mkdir  ${oPath}/clr
-    for x in $(seq $No1 $No2) X
+    for x in $(seq $No1 $No2) #X Y
     do
         chr="chr"$x
         echo ${sample_vcf} " go to " ${chr}
-        awk '($1~"#CHROM")||($1~"CHROM"){print $0}' ${oPath}/${sample_vcf}.${chr}.vcf  | sed 's%#%%g' > ${oPath}/${sample_vcf}.header.tmp
+        awk '($1~"#CHROM")||($1~"CHROM"){print $0}' ${oPath}/${sample_vcf}.${chr}.vcf  | sed 's%#%%g' > ${oPath}/${sample_vcf}.${chr}.header.tmp
         #sed 's%#CHROM%CHROM%g' ${oPath}/${sample_vcf}.${chr}.vcf > ${oPath}/${sample_vcf}.${chr}.vcf.gene.tmp
-        Rscript ${HOME}/R_CLOGIT.R -i ${oPath}/${sample_vcf}.${chr}.vcf -s ${HOME}/IDR_pair_outcome.txt -o ${oPath}/clr/${sample_vcf}.${chr}.vcf.R.clr -d ${oPath}/${sample_vcf}.header.tmp
+        Rscript ${HOME}/R_CLOGIT.R -i ${oPath}/${sample_vcf}.${chr}.vcf -s ${oPath}/${sample_vcf}.cov -o ${oPath}/clr/${sample_vcf}.${chr}.vcf.clr -d ${oPath}/${sample_vcf}.header.tmp
     done
     echo -e "${sample} clr endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log1
 fi
@@ -133,17 +134,17 @@ if [ -n "${con}" ] && ([ "${con}" == "set" ]|| [ "${con}" == "all" ]); then
     echo "#############################################PLINK-GENE-SET-ASSOCIATION-TEST-ASSO##################################"
     echo -e "${sample} plink-set startTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
     mkdir ${oPath}/plink_gb
-    for x in $(seq $No1 $No2) X
+    for x in $(seq $No1 $No2) #X Y
     do
         chr="chr"$x
         echo ${sample} " go to " ${chr}
         No=$(ls ${oPath}/${sample_vcf}.${chr}.vcf.geneset_* | wc -l)
         No3=$((No-1))
         
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${HOME}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --recode --make-bed --out ${oPath}/${sample_vcf}.${chr}.R
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --recode --make-bed --out ${oPath}/${sample_vcf}.${chr}
         for i in $(seq 0 $No3)
         do
-        ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.R --pheno ${HOME}/${sample_vcf}.fam --mpheno 4  --covar ${HOME}/${sample_vcf}.cov --covar-number 2-13 --threads 128  --allow-no-sex --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i} --logistic --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/plink_gb/${sample_vcf}.${chr}.vcf.set.R_${i} 
+        ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr} --pheno ${oPath}/${sample_vcf}.fam --mpheno 4  --covar ${oPath}/${sample_vcf}.cov --covar-number 2-13 --threads 128  --allow-no-sex --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i} --logistic --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/plink_gb/${sample_vcf}.${chr}.vcf.set_${i} 
         done
         echo -e "${sample} plink-set endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
     done
@@ -159,13 +160,12 @@ if [ -n "${con}" ] && ([ "${con}" == "skat" ]|| [ "${con}" == "all" ]); then
     echo "############################################# SKAT-O gene association test ##################################"
     echo -e "${sample} skat-o startTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
     mkdir -p ${oPath}/skat
-    for x in $(seq $No1 $No2) X
+    for x in $(seq $No1 $No2) #X Y
     do
         chr="chr"$x
         echo ${sample} " go to " ${chr}
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno  ${HOME}/${sample_vcf}.fam  --mpheno 4 --allow-no-sex --make-bed --out ${oPath}/${sample_vcf}.${chr}
         awk 'FNR>1{split($8,b,";");split(b[1],a,"="); if ($1!~"#") print a[2]"\t"$3}' ${oPath}/${sample_vcf}.${chr}.vcf >  ${oPath}/${sample_vcf}.${chr}.SKAT
-        Rscript ${HOME}/R_SKAT.R -i ${oPath}/${sample_vcf}.${chr} -c ${HOME}/SKAT_188R.cov -o ${oPath}/skat/${sample_vcf}.${chr}.vcf.R.skata_o 
+        Rscript ${HOME}/R_SKAT.R -i ${oPath}/${sample_vcf}.${chr} -c ${oPath}/${sample_vcf}.cov -o ${oPath}/skat/${sample_vcf}.${chr}.vcf.skata_o 
     done
     
     echo -e "${sample} skat-o endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
@@ -179,19 +179,19 @@ if [ -n "${con}" ] && ([ "${con}" == "qtl" ]|| [ "${con}" == "#all" ]); then
     mkdir ${oPath}/qtl_sgl
     echo "############################################# PLINK QTL variant association test ##################################"
     echo -e "${sample} plink-qtl startTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
-    for n in $(seq $No1 $No2) X
+    for n in $(seq $No1 $No2) #X Y
     do
         chr="chr"$n
         echo ${sample} " go to " ${chr}
         
-        N1=$(awk 'FNR==1{print NF}' ${HOME}/${sample_vcf}.protein)
+        N1=$(awk 'FNR==1{print NF}' ${oPath}/${sample_vcf}.protein)
         N2=$((N1-2))
         
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --keep ${HOME}/${sample_vcf}.protein --make-bed --out ${oPath}/${sample_vcf}.${chr}.vcf.gene.soma.R
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --keep ${oPath}/${sample_vcf}.protein --make-bed --out ${oPath}/${sample_vcf}.${chr}.vcf.gene.soma
         
         for x in $(seq 1 $N2)
         do       
-            ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.soma.R --pheno ${HOME}/${sample_vcf}.protein --mpheno ${x}  --covar ${HOME}/${sample_vcf}.cov --covar-number  2 --threads 128  --allow-no-sex --linear  --assoc perm --pfilter 0.05 --out ${oPath}/qtl_new/${sample_vcf}.${chr}.R.${x} 
+            ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.soma --pheno ${oPath}/${sample_vcf}.protein --mpheno ${x}  --covar ${oPath}/${sample_vcf}.cov --covar-number  2 --threads 128  --allow-no-sex --linear  --assoc perm --pfilter 0.05 --out ${oPath}/qtl_sgl/${sample_vcf}.${chr}.${x} 
         done
     done
     
@@ -210,23 +210,23 @@ if [ -n "${con}" ] && ([ "${con}" == "qtl_gb" ]|| [ "${con}" == "all" ]); then
     echo "############################################# PLINK QTL gene burden test ##################################"
     echo -e "${sample} plink-qtl gene burden startTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
     
-    for n in $(seq $No1 $No2) X
+    for n in $(seq $No1 $No2) #X Y
     do
         chr="chr"$n
         echo ${sample} " go to " ${chr}
         
         No=$(ls ${oPath}/${sample_vcf}.${chr}.vcf.geneset_* | wc -l)
         No3=$((No-1))
-        N1=$(awk 'FNR==1{print NF}' ${HOME}/${sample_vcf}.protein)
+        N1=$(awk 'FNR==1{print NF}' ${oPath}/${sample_vcf}.protein)
         N2=$((N1-2))
         
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --keep ${HOME}/${sample_vcf}.protein --recode --make-bed --out ${oPath}/${sample_vcf}.${chr}.vcf.gene.qtl.R
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --keep ${oPath}/${sample_vcf}.protein --recode --make-bed --out ${oPath}/${sample_vcf}.${chr}.vcf.gene.qtl
         
         for x in $(seq 1 $N2)
         do
             for i in $(seq 0 $No3)
             do
-                ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.qtl.R --pheno ${HOME}/${sample_vcf}.protein --mpheno ${x} --threads 128     --covar ${HOME}/${sample_vcf}.cov --covar-number  2 --allow-no-sex --linear --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i}  --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/qtl_gb/${sample_vcf}.${chr}.vcf.set.R.${x}_${i} 
+                ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr}.vcf.gene.qtl --pheno ${oPath}/${sample_vcf}.protein --mpheno ${x} --threads 128     --covar ${oPath}/${sample_vcf}.cov --covar-number  2 --allow-no-sex --linear --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i}  --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/qtl_gb/${sample_vcf}.${chr}.vcf.set.${x}_${i} 
             done
         done
     done
