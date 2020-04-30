@@ -15,6 +15,9 @@ outputo<-paste(as.character(opt$output_file),'.o',sep='')
 print("starting...")
 Sys.time()
 
+cwd=dirname('output')
+setwd(cwd)
+
 print("#prepare the data input in plink format and define the SSD parameter")
 File.Fam<- paste(input,'.fam',sep='')
 File.Bim<- paste(input,'.bim',sep='')
@@ -38,7 +41,7 @@ File.Cov<-as.character(opt$cov_file)
 FAM_Cov<-Read_Plink_FAM_Cov(File.Fam, File.Cov, cov_header=TRUE, Is.binary=TRUE)
 X1 = FAM_Cov$COV1
 # supress the covariates due to heavy computation burden
-#X2 = FAM_Cov$COV2
+X2 = FAM_Cov$COV2
 #X3 = FAM_Cov$COV3
 #X4 = FAM_Cov$COV4
 #X5 = FAM_Cov$COV5
@@ -56,7 +59,7 @@ print(input)
 print("#start the KAT-O test with resampling adjustment")
 #obj<-SKAT_Null_Model(y ~ X1, out_type="C", n.Resampling=1000, type.Resampling="bootstrap")
 #outc.skatc<-SKAT_CommonRare(SSD.INFO, obj, r.corr.rare=1, r.corr.common=1)
-obj<-SKAT_Null_Model(Phenotype ~ X1, out_type = "D",data=FAM_Cov) #+X3+X4+X5+X6+X7+X8+X9+X10+X11+X12
+obj<-SKAT_Null_Model(Phenotype ~ X1+X2, out_type = "D",data=FAM_Cov) #+X3+X4+X5+X6+X7+X8+X9+X10+X11+X12
 outo.skato<-SKATBinary.SSD.All(SSD.INFO,obj,method="SKATO") #, N.Resampling=2 *10^6, seednum=100, epsilon=10^-6, SetID=NULL)
 
 print("#SKAT-O output saving")
