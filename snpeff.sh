@@ -1,6 +1,6 @@
 #!/bin/sh
 # 1. parameter setting #
-HOME=/home/tzhang
+HOME=$(awk '($1~"^HOME"){print $0}' cfg | cut -d "=" -f 2)
 outdir=$1
 sample=$2
 mkdir ${outdir}/snpEff_vcf
