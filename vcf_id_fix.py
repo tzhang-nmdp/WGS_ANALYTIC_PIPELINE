@@ -2,7 +2,7 @@
 import sys
 input_vcf=open(sys.argv[1],'r')
 sample_file=open(sys.argv[2],'r')
-output=open(str(sys.argv[1])+'combine.vcf','r')
+output=open(str(sys.argv[1])+'.cr','r')
 sample_list=[]
 
 for line in sample_file:
