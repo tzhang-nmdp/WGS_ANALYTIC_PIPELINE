@@ -57,21 +57,23 @@ print("# integrate genotype phenotype information")
     var_tmp[,2]<-row.names(var_tmp)
     colnames(var_tmp)<-c('V1','V2') 
     id_var<-as.data.frame(merge(id,var_tmp,by.x='IID',by.y='V2'))
-    colnames(id_var)[16]<-'geno'  
-    id_var[,16]<-sapply(id_var[,16],as.character)         
+    ln<-dim(id_var)[2]
+        print(id_var)
+    colnames(id_var)[ln]<-'geno'  
+    id_var[,ln]<-sapply(id_var[,ln],as.character)         
     id_len<-dim(id_var)[1]  
     for ( n in 1:id_len)
     {
-    if (grepl('0/0',id_var[n,16]))
+    if (grepl('0/0',id_var[n,ln]))
         {
-        id_var[n,16]<-0}
+        id_var[n,ln]<-0}
     else
         {
-        id_var[n,16]<-1}
+        id_var[n,ln]<-1}
         }        
-    id_var[,16]<-sapply(id_var[,16],as.factor)
+    id_var[,ln]<-sapply(id_var[,ln],as.factor)
     sm_len<-length(id_var$geno)
-    
+    print(id_var)
 print("# clogit test running")    
     if (sum(as.numeric(as.character(id_var$geno)))==0)  
         {pvalue_list[i]<-1}
