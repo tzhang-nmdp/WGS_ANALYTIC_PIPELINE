@@ -1,6 +1,6 @@
 #!/bin/sh
 ############################################################################################################################################################
-# example commandline sh ../../wgs_analytic_pipeline.sh -s sample.list.snpeff.combine.vcf -o example -c set -t somatic -n 1_1
+# example commandline sh ../../wgs_analytic_pipeline.sh -s sample.list.snpeff.combine.vcf -o example -c set -t somatic -n 1_1 -v 12
 ############################################################################################################################################################
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ PLINK=${SOFTWARE}/plink_1.9/plink
 #------------------------------------------------------------------------------------------------------------------------------
 ## Option setup for paramters 
 #------------------------------------------------------------------------------------------------------------------------------
-while getopts ":s:o:c:t:n:" opt
+while getopts ":s:o:c:t:n:v:" opt
 do
     case $opt in
         s)
@@ -32,6 +32,9 @@ do
         ;;
         n)
             No=$OPTARG
+        ;;
+        v)
+            Cov=$OPTARG            
         ;;
         ?)
             echo "unknown argument"
@@ -61,6 +64,11 @@ fi
 
 if [ ! ${No} ]; then
     echo "-n invalid"
+    exit 1
+fi
+
+if [ ! ${Cov} ]; then
+    echo "-v invalid"
     exit 1
 fi
 
@@ -102,8 +110,8 @@ if [ -n "${con}" ] && ([ "${con}" == "sgl" ]|| [ "${con}" == "all" ]); then
     do
         chr="chr"$x
         echo ${sample_vcf} " go to " ${chr}
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${oPath}/${sample_vcf}.cov --covar-number 2-13 --logistic perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig
-        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${oPath}/${sample_vcf}.cov --covar-number 2-13 --assoc perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${oPath}/${sample_vcf}.cov --covar-number 2-${Cov} --logistic perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig
+        ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --covar ${oPath}/${sample_vcf}.cov --covar-number 2-${Cov} --assoc perm --pfilter 0.05 --out ${oPath}/sgl/${sample_vcf}.${chr}.vcf.sig
     done
     rm ${oPath}/sgl/*.log
     rm ${oPath}/sgl/*sex
@@ -147,7 +155,7 @@ if [ -n "${con}" ] && ([ "${con}" == "set" ]|| [ "${con}" == "all" ]); then
         ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --recode --make-bed --out ${oPath}/${sample_vcf}.${chr}
         for i in $(seq 0 $No3)
         do
-        ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr} --pheno ${oPath}/${sample_vcf}.fam --mpheno 4  --covar ${oPath}/${sample_vcf}.cov --covar-number 2-13 --threads 128  --allow-no-sex --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i} --logistic --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/plink_gb/${sample_vcf}.${chr}.vcf.set_${i} 
+        ${PLINK} --bfile ${oPath}/${sample_vcf}.${chr} --pheno ${oPath}/${sample_vcf}.fam --mpheno 4  --covar ${oPath}/${sample_vcf}.cov --covar-number 2-${Cov} --threads 128  --allow-no-sex --set ${oPath}/${sample_vcf}.${chr}.vcf.geneset_${i} --logistic --assoc perm set-test --set-p 0.05  --pfilter 0.05 --out ${oPath}/plink_gb/${sample_vcf}.${chr}.vcf.set_${i} 
         done
         echo -e "${sample_vcf} plink-set endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
     done
