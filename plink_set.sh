@@ -19,6 +19,8 @@ python ${HOME}/vcf_id.py ${outdir}/${vcf}.${chr} somatic > ${outdir}/${vcf}.${ch
 elif [ ${temp} == "germline" ] ; then 
 echo "germline"
 python ${HOME}/vcf_id.py ${outdir}/${vcf}.${chr} germ > ${outdir}/${vcf}.${chr}.vcf
+elif [ ${temp} == "sim" ] ; then 
+cp ${outdir}/${vcf}.${chr} ${outdir}/${vcf}.${chr}.vcf
 fi
 
 # check vcf transformation
@@ -38,4 +40,4 @@ ${REF}/database_port/gnomad_ab0.05_${chr}
 
 echo "#4. for SKAT geneset"
 cat ${outdir}/${vcf}.${chr}.vcf.geneset[._]* > ${outdir}/${vcf}.${chr}.vcf.geneset
-awk 'FNR>1{split($8,b,";");split(b[1],a,"="); if ($1!~"#") print a[2]"\t"$3}' ${outdir}/${vcf}.${chr}.vcf >  ${outdir}/${vcf}.${chr}.SKAT
+awk 'FNR>1{split($8,b,";");if (b[1]~"GENE") split(b[1],a,"="); else split(b[2],a,"=");  if ($1!~"#") print a[2]"\t"$3}' ${outdir}/${vcf}.${chr}.vcf >  ${outdir}/${vcf}.${chr}.SKAT
