@@ -1,6 +1,6 @@
 #!/bin/sh
 ############################################################################################################################################################
-# example commandline sh ../../wgs_analytic_pipeline.sh -s sample.list.snpeff.combine.vcf -o example -c set -t somatic -n 1 1
+# example commandline sh ../../wgs_analytic_pipeline.sh -s sample.list.snpeff.combine.vcf -o example -c set -t somatic -n 1_1
 ############################################################################################################################################################
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -64,12 +64,13 @@ if [ ! ${No} ]; then
     exit 1
 fi
 
-No1=$(echo ${No} | awk '{print $1}')
-No2=$(echo ${No} | awk '{print $2}')
+No1=$(echo ${No} | cut -d "_" -f 1)
+No2=$(echo ${No} | cut -d "_" -f 2)
 
 date=$(date +%F)
 shellPath=$(cd "$(dirname "$0")"; pwd)
 echo ${shellPath}
+echo $No1 $No2
 
 #------------------------------------------------------------------------------------------------------------------------------
 ## vcf data transformation
