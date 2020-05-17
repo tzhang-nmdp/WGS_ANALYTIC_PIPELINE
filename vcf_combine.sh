@@ -3,6 +3,8 @@ outdir=$1
 sample=$2
 sample_list=$3
 HOME=$(awk '($1~"^HOME"){print $0}' cfg | cut -d "=" -f 2)
+SOFTWARE=$(awk '($1~"^SOFTWARE"){print $0}' cfg | cut -d "=" -f 2)
+REF=$(awk '($1~"^REF"){print $0}' cfg | cut -d "=" -f 2)
 
 # sort  and compress the vcf by coordinates
 echo ${sample}
