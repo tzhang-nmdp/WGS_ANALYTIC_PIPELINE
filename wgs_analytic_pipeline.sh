@@ -166,7 +166,7 @@ if [ -n "${con}" ] && ([ "${con}" == "skat" ]|| [ "${con}" == "all" ]); then
     do
         chr="chr"$x
         echo ${sample_vcf} " go to " ${chr}
-        awk 'FNR>1{split($8,b,";");split(b[1],a,"="); if ($1!~"#") print a[2]"\t"$3}' ${oPath}/${sample_vcf}.${chr}.vcf >  ${oPath}/${sample_vcf}.${chr}.SKAT
+        awk 'FNR>1{split($8,b,";");if (b[1]~"GENE") split(b[1],a,"="); else split(b[2],a,"=");  if ($1!~"#") print a[2]"\t"$3}' ${outdir}/${vcf}.${chr}.vcf >  ${outdir}/${vcf}.${chr}.SKAT
         Rscript ${HOME}/R_SKAT.R -i ${oPath}/${sample_vcf}.${chr} -c ${oPath}/${sample_vcf}.cov -o ${oPath}/skat/${sample_vcf}.${chr}.vcf.skata_o 
     done
     
