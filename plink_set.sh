@@ -6,6 +6,8 @@ chr=$3
 temp=$4
 echo ${chr}
 HOME=$(awk '($1~"^HOME"){print $0}' cfg | cut -d "=" -f 2)
+SOFTWARE=$(awk '($1~"^SOFTWARE"){print $0}' cfg | cut -d "=" -f 2)
+REF=$(awk '($1~"^REF"){print $0}' cfg | cut -d "=" -f 2)
 
 echo "#1. chromosome variant extraction" && date
 awk -v a="$chr" '($1~"#")||($1==a){print $0}' ${outdir}/${vcf}  > ${outdir}/${vcf}.${chr}
@@ -32,7 +34,7 @@ echo "#3. chromosome gene extraction" && date
 python ${HOME}/plink_set.py \
 ${outdir}/${vcf}.${chr}.vcf \
 ${outdir}/${vcf}.${chr}.vcf.geneset \
-${HOME}/database/database_port/gnomad_ab0.05_${chr} 
+${REF}/database_port/gnomad_ab0.05_${chr} 
 
 echo "#4. for SKAT geneset"
 cat ${outdir}/${vcf}.${chr}.vcf.geneset[._]* > ${outdir}/${vcf}.${chr}.vcf.geneset
