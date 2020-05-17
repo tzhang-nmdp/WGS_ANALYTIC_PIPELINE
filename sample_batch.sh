@@ -5,6 +5,8 @@ sample_list=$2
 scripts=$3
 con=$4
 HOME=$(awk '($1~"^HOME"){print $0}' cfg | cut -d "=" -f 2)
+SOFTWARE=$(awk '($1~"^SOFTWARE"){print $0}' cfg | cut -d "=" -f 2)
+REF=$(awk '($1~"^REF"){print $0}' cfg | cut -d "=" -f 2)
 
 # 2. run annotation condition in batch
 if [ -n "${con}" ] && [ "${con}" == "snpeff" ]; then
