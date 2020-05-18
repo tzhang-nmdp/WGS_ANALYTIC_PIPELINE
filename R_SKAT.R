@@ -39,9 +39,11 @@ SSD.INFO<-Open_SSD(File.SSD,File.Info)
 print("#start covariate")
 File.Cov<-as.character(opt$cov_file)
 FAM_Cov<-Read_Plink_FAM_Cov(File.Fam, File.Cov, cov_header=TRUE, Is.binary=TRUE)
-X1 = FAM_Cov$COV1
+#X1 = FAM_Cov$COV1
+X1 = FAM_Cov[,3]
 # supress the covariates due to heavy computation burden
-X2 = FAM_Cov$COV2
+#X2 = FAM_Cov$COV2
+X2 = FAM_Cov[,4]
 #X3 = FAM_Cov$COV3
 #X4 = FAM_Cov$COV4
 #X5 = FAM_Cov$COV5
