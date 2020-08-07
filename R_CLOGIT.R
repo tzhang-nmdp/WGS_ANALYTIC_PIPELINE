@@ -58,7 +58,6 @@ print("# integrate genotype phenotype information")
     colnames(var_tmp)<-c('V1','V2') 
     id_var<-as.data.frame(merge(id,var_tmp,by.x='IID',by.y='V2'))
     ln<-dim(id_var)[2]
-        print(id_var)
     colnames(id_var)[ln]<-'geno'  
     id_var[,ln]<-sapply(id_var[,ln],as.character)         
     id_len<-dim(id_var)[1]  
@@ -73,7 +72,6 @@ print("# integrate genotype phenotype information")
         }        
     id_var[,ln]<-sapply(id_var[,ln],as.factor)
     sm_len<-length(id_var$geno)
-    print(id_var)
 print("# clogit test running")    
     if (sum(as.numeric(as.character(id_var$geno)))==0)  
         {pvalue_list[i]<-1}
@@ -81,7 +79,7 @@ print("# clogit test running")
         {pvalue_list[i]<-1}           
     else
         {
-    var_CLR<-clogit(COV1~geno+strata(COV2),method="approximate", data=id_var)
+    var_CLR<-clogit(outcome~geno+strata(COV1),method="approximate", data=id_var)
     warnings()
     st_tmp<-summary(var_CLR)
     pvalue_list[i]<-st_tmp$coefficients[5]
