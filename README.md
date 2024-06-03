@@ -44,7 +44,7 @@
 * '2. Output for PLINK gene burden test: ***.assoc.set.perm'
 <img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_logistic_gene_burden_output.png" width="800">
 * '3. Output for R conditional logistic regression test: ***.clr'
-<img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/CLR_output.png" width="800">
+<img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/C-L-R_output.png" width="800">
 * '4. Output for R SKAT-O test'
 <img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/SKAT_O_output.png" width="800">
 * '5. Output for PLINK QTL test'
