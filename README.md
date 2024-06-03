@@ -20,7 +20,7 @@
 
 Commandline:
 ``` r
-sh sample_batch.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t ${prefix} -n ${start_chrom}_${end_chrom} -v ${No_covariate}
+sh sample_batch.sh -s ${sample_id} -o ${output_dir} -c ${condition}
 ```
 
 #### PART II. A set of variant level or gene level association tests:
@@ -46,9 +46,9 @@ sh wgs_analytic_pipeline.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t 
 <img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_logistic_gene_burden_output.png" width="800">
 * '3. Output for R conditional logistic regression test: ***.clr'
 <img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/C-L-R_output.png" width="800">
-* '4. Output for R SKAT-O test'
+* '4. Output for R SKAT-O test ***.skata_o'
 <img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/SKAT_O_output.png" width="800">
-* '5. Output for PLINK QTL test'
+* '5. Output for PLINK QTL test, ***.qtl'
 <img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_QTL_output.png" width="800">
-* '6. Output for PLINK QTL gene burden test'
+* '6. Output for PLINK QTL gene burden test, ***.qtl'
 <img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_QTL_gene_burden_output.png" width="800">
