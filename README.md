@@ -29,6 +29,7 @@ Steps:
 * `4. R SKAT-O test;`
 * `5. PLINK QTL test;`
 * `6. PLINK QTL gene burden test.`
+
 Commandline:
 '''
 sh wgs_analytic_pipeline.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t ${prefix} -n ${start_chrom}_${end_chrom} -v ${No_covariate}
