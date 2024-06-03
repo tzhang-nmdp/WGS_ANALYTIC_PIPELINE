@@ -10,10 +10,6 @@
 | python |
 | R (SURVIVAL, SKAT-O) | 
 
-
-
-  
-  
   
 #### PART I. A series of VCF data transformations:
 
@@ -44,20 +40,15 @@
 #### PART III. ASSOCIATION TEST OUTPUT CONTENT CHECK
 
 * '1. Output for PLINK logstic/Chisq test: ***.assoc.logistic.perm /***.assoc.perm'
- ![](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/WGS_WORKFLOW.png)
+![PLINK_logistic_output](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_logistic_output.png)
 * '2. Output for R conditional logistic regression test: ***.clr'
-
+![CLR_output](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/CLR_output.png)
 * '3. Output for PLINK gene burden test: ***.assoc.set.perm'
- 
+![PLINK_logistic_gene_burden_output](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_logistic_gene_burden_output.png) 
 * '4. Output for R SKAT-O test'
-
- 
+![SKAT-O_output](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/SKAT-O_output.png)
 * '5. Output for PLINK QTL test'
- 
- 
+![PLINK_QTL_output](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_QTL_output.png) 
 * '6. Output for PLINK QTL gene burden test'
- 
-
- 
-
+![PLINK_QTL_gene_burden_output](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_QTL_gene_burden_output.png)
 
