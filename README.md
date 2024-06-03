@@ -20,6 +20,10 @@
 * `3. VCF data transformation on genotype/annotation fields;`
 * `4.  VCF data transformation on variant gene set.`
 
+Commandline:
+``` r
+sh wgs_analytic_pipeline.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t ${prefix} -n ${start_chrom}_${end_chrom} -v ${No_covariate}
+```
 
 #### PART II. A set of variant level or gene level association tests:
 Steps:
@@ -31,9 +35,9 @@ Steps:
 * `6. PLINK QTL gene burden test.`
 
 Commandline:
-'''
+``` r
 sh wgs_analytic_pipeline.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t ${prefix} -n ${start_chrom}_${end_chrom} -v ${No_covariate}
-'''
+```
 
   
 #### PART III. ASSOCIATION TEST OUTPUT CONTENT CHECK
