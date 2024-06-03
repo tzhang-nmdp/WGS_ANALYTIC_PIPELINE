@@ -1,12 +1,64 @@
 #!/bin/sh
-# 1. basic parameters
-outdir=$1
-sample_list=$2
-scripts=$3
-con=$4
+############################################################################################################################################################
+# example commandline sh sample_batch.sh -s sample.list -o example -c set -t sim -n 1_1 -v 12
+############################################################################################################################################################
+
+#------------------------------------------------------------------------------------------------------------------------------
+## Default parameter option
+#------------------------------------------------------------------------------------------------------------------------------
+
 HOME=$(awk '($1~"^HOME"){print $0}' cfg | cut -d "=" -f 2)
 SOFTWARE=$(awk '($1~"^SOFTWARE"){print $0}' cfg | cut -d "=" -f 2)
 REF=$(awk '($1~"^REF"){print $0}' cfg | cut -d "=" -f 2)
+
+#------------------------------------------------------------------------------------------------------------------------------
+## Option setup for paramters 
+#------------------------------------------------------------------------------------------------------------------------------
+while getopts ":s:o:c:s:" opt
+do
+    case $opt in
+        s)
+            sample_list=$OPTARG
+        ;;
+        o)
+            outdir=$OPTARG
+        ;;
+        c)
+            con=$OPTARG
+        ;;
+        s)
+            scripts=$OPTARG           
+        ;;
+        ?)
+            echo "unknown argument"
+            exit 1
+        ;;
+    esac
+done
+if [ ! ${sample_vcf} ]; then
+    echo "-s invalid"
+    exit 1
+fi
+
+if [ ! ${oPath} ]; then
+    echo "-o invalid"
+    exit 1
+fi
+
+if [ ! ${con} ]; then
+    echo "-c invalid"
+    exit 1
+fi
+
+if [ ! ${scripts} ]; then
+    echo "-s invalid"
+    exit 1
+fi
+
+date=$(date +%F)
+shellPath=$(cd "$(dirname "$0")"; pwd)
+echo ${shellPath}
+echo ${date}
 
 # 2. run annotation condition in batch
 if [ -n "${con}" ] && [ "${con}" == "snpeff" ]; then
