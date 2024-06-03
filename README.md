@@ -10,31 +10,29 @@
 | python |
 | R (SURVIVAL, SKAT-O) | 
 
-  
+## Commandline ##################################
+
+
 #### PART I. A series of VCF data transformations:
 
 * `1. snpEff VCF annotation;`
-
 * `2. bcftools VCF merge;`
-
 * `3. VCF data transformation on genotype/annotation fields;`
-
 * `4.  VCF data transformation on variant gene set.`
 
 
 #### PART II. A set of variant level or gene level association tests:
-
+Steps:
 * `1. PLINK logstic/Chisq test;`
-
 * `2. PLINK gene burden test;`
-
 * `3. R conditional logistic regression test;`
-
 * `4. R SKAT-O test;`
-
 * `5. PLINK QTL test;`
-
 * `6. PLINK QTL gene burden test.`
+Commandline:
+'''
+sh wgs_analytic_pipeline.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t ${prefix} -n ${start_chrom}_${end_chrom} -v ${No_covariate}
+'''
 
   
 #### PART III. ASSOCIATION TEST OUTPUT CONTENT CHECK
