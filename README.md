@@ -17,8 +17,6 @@
   
 #### PART I. A series of VCF data transformations:
 
-
-
 * `1. snpEff VCF annotation;`
 
 * `2. bcftools VCF merge;`
@@ -27,10 +25,8 @@
 
 * `4.  VCF data transformation on variant gene set.`
 
+
 #### PART II. A set of variant level or gene level association tests:
-
-
-
 
 * `1. PLINK logstic/Chisq test;`
 
@@ -43,4 +39,25 @@
 * `5. PLINK QTL test;`
 
 * `6. PLINK QTL gene burden test.`
+
+  
+#### PART III. ASSOCIATION TEST OUTPUT CONTENT CHECK
+
+* '1. Output for PLINK logstic/Chisq test: ***.assoc.logistic.perm /***.assoc.perm'
+ ![](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/WGS_WORKFLOW.png)
+* '2. Output for R conditional logistic regression test: ***.clr'
+
+* '3. Output for PLINK gene burden test: ***.assoc.set.perm'
+ 
+* '4. Output for R SKAT-O test'
+
+ 
+* '5. Output for PLINK QTL test'
+ 
+ 
+* '6. Output for PLINK QTL gene burden test'
+ 
+
+ 
+
 
