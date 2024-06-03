@@ -56,6 +56,7 @@ echo ${date}
 if [ -n "${con}" ] && [ "${con}" == "snpeff" ]; then
         # 2.1 enumerate the sample vcf list
         No2=($(wc -l ${outdir}/${sample_list}))
+        scripts="scripts/snpeff.sh"
         for i in $(seq 1 $No2)
         do
                 sample=$(awk -v a="$i" '(FNR==a){print $0}' ${outdir}/${sample_list})
@@ -74,10 +75,10 @@ if [ -n "${con}" ] && [ "${con}" == "vcf_combine" ]; then
         # 2.1 enumerate the sample vcf list
         No2=($(wc -l ${outdir}/${sample_list}))
         rm ${outdir}/${sample_list}.snpeff
+        scripts="scripts/vcf_combine.sh"
         for i in $(seq 1 $No2)
         do
                 sample=$(awk -v a="$i" '(FNR==a){print $0}' ${outdir}/${sample_list})
-#                echo ${sample} ${con}      
                 # 2.2 run snpEff annotation with job number control ( 10 jobs in parallel)
                 if (( i%10==0 )); then
                       sh ${HOME}/${scripts} ${outdir} ${sample} ${sample_list}
