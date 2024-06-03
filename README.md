@@ -10,9 +10,7 @@
 | python |
 | R (SURVIVAL, SKAT-O) | 
 
-## Commandline ##################################
-
-
+--------------------------------------------------------------------------------------------------
 #### PART I. A series of VCF data transformations:
 
 * `1. snpEff VCF annotation;`
@@ -22,7 +20,7 @@
 
 Commandline:
 ``` r
-sh wgs_analytic_pipeline.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t ${prefix} -n ${start_chrom}_${end_chrom} -v ${No_covariate}
+sh sample_batch.sh -s ${sample_id} -o ${output_dir} -c ${condition} -t ${prefix} -n ${start_chrom}_${end_chrom} -v ${No_covariate}
 ```
 
 #### PART II. A set of variant level or gene level association tests:
