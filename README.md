@@ -40,7 +40,7 @@
 #### PART III. ASSOCIATION TEST OUTPUT CONTENT CHECK
 
 * '1. Output for PLINK logstic/Chisq test: ***.assoc.logistic.perm /***.assoc.perm'
-<img src="[your_relative_path_here](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_logistic_output.png)" width="350">
+<img src="https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/PLINK_logistic_output.png" width="350">
 * '2. Output for R conditional logistic regression test: ***.clr'
 ![CLR_output](https://github.com/taozhang2019/WGS_ANALYTIC_PIPELINE/blob/master/example/CLR_output.png)
 * '3. Output for PLINK gene burden test: ***.assoc.set.perm'
