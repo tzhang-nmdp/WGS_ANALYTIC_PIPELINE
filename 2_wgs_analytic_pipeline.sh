@@ -91,7 +91,7 @@ if [ -n "${con}" ] && ([ "${con}" == "prep" ] || [ "${con}" == "all" ]); then
         do
         chr="chr"${x}
         echo ${sample_vcf} " go to " ${chr}
-        sh ${HOME}/plink_set.sh ${oPath} ${sample_vcf} ${chr} ${temp}
+        sh ${HOME}/script/plink_set.sh ${oPath} ${sample_vcf} ${chr} ${temp}
         ${PLINK} --vcf ${oPath}/${sample_vcf}.${chr}.vcf --threads 128 --pheno ${oPath}/${sample_vcf}.fam --mpheno 4 --allow-no-sex --recode --make-bed --out ${oPath}/${sample_vcf}.${chr}
     done
     echo -e "${sample_vcf} plink-pre endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
@@ -132,7 +132,7 @@ if [ -n "${con}" ] && ([ "${con}" == "clr" ]|| [ "${con}" == "all" ]); then
         echo ${sample_vcf} " go to " ${chr}
         awk '($1~"#CHROM")||($1~"CHROM"){print $0}' ${oPath}/${sample_vcf}.${chr}.vcf  | sed 's%#%%g' > ${oPath}/${sample_vcf}.${chr}.header.tmp
         #sed 's%#CHROM%CHROM%g' ${oPath}/${sample_vcf}.${chr}.vcf > ${oPath}/${sample_vcf}.${chr}.vcf.gene.tmp
-        Rscript ${HOME}/R_CLOGIT.R -i ${oPath}/${sample_vcf}.${chr}.vcf -s ${oPath}/${sample_vcf}.cov -o ${oPath}/clr/${sample_vcf}.${chr}.vcf.clr -d ${oPath}/${sample_vcf}.header.tmp
+        Rscript ${HOME}/script/R_CLOGIT.R -i ${oPath}/${sample_vcf}.${chr}.vcf -s ${oPath}/${sample_vcf}.cov -o ${oPath}/clr/${sample_vcf}.${chr}.vcf.clr -d ${oPath}/${sample_vcf}.header.tmp
     done
     echo -e "${sample_vcf} clr endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log1
 fi
@@ -176,7 +176,7 @@ if [ -n "${con}" ] && ([ "${con}" == "skat" ]|| [ "${con}" == "all" ]); then
         chr="chr"$x
         echo ${sample_vcf} " go to " ${chr}
         awk 'FNR>1{split($8,b,";");if (b[1]~"GENE") split(b[1],a,"="); else split(b[2],a,"=");  if ($1!~"#") print a[2]"\t"$3}' ${outdir}/${vcf}.${chr}.vcf >  ${outdir}/${vcf}.${chr}.SKAT
-        Rscript ${HOME}/R_SKAT.R -i ${oPath}/${sample_vcf}.${chr} -c ${oPath}/${sample_vcf}.cov -o ${oPath}/skat/${sample_vcf}.${chr}.vcf.skata_o 
+        Rscript ${HOME}/script/R_SKAT.R -i ${oPath}/${sample_vcf}.${chr} -c ${oPath}/${sample_vcf}.cov -o ${oPath}/skat/${sample_vcf}.${chr}.vcf.skata_o 
     done
     
     echo -e "${sample_vcf} skat-o endTime::::::::\c" >>${oPath}/plink_${date}.log && date >>${oPath}/plink_${date}.log
